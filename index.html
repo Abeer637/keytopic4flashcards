@@ -108,15 +108,41 @@
         let currentIndex = 0;
         let notUnderstood = [];
 
-        function loadFlashcard(index) {
-            document.querySelector(".front").innerHTML = flashcards[index].question;
-            document.querySelector(".back").innerHTML = flashcards[index].answer;
+        function loadFlashcard() {
+            if (currentIndex >= flashcards.length) {
+                if (notUnderstood.length > 0) {
+                    flashcards.push(...notUnderstood);
+                    notUnderstood = [];
+                    currentIndex = flashcards.length - notUnderstood.length;
+                    alert("Reviewing the cards you didn't understand.");
+                } else {
+                    alert("You have completed all flashcards!");
+                    return;
+                }
+            }
+            document.querySelector(".front").innerHTML = flashcards[currentIndex].question;
+            document.querySelector(".back").innerHTML = flashcards[currentIndex].answer;
+            document.querySelector(".flashcard").classList.remove("flipped");
+            document.querySelector(".buttons").style.display = "none";
         }
-        function flipCard() { document.querySelector(".flashcard").classList.toggle("flipped"); }
-        function markUnderstood() { currentIndex++; loadFlashcard(currentIndex); }
-        function markNotUnderstood() { notUnderstood.push(flashcards[currentIndex]); markUnderstood(); }
 
-        loadFlashcard(currentIndex);
+        function flipCard() {
+            document.querySelector(".flashcard").classList.toggle("flipped");
+            document.querySelector(".buttons").style.display = "block";
+        }
+
+        function markUnderstood() {
+            currentIndex++;
+            loadFlashcard();
+        }
+
+        function markNotUnderstood() {
+            notUnderstood.push(flashcards[currentIndex]);
+            currentIndex++;
+            loadFlashcard();
+        }
+
+        loadFlashcard();
     </script>
 </body>
 </html>

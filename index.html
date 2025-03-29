@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life in Nazi Germany - Smart Flashcards</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .flashcard {
+            width: 450px;
+            height: 300px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+            font-size: 18px;
+            padding: 10px;
+        }
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+        .flashcard .front, .flashcard .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .flashcard .back {
+            transform: rotateY(180deg);
+            background: #007BFF;
+            color: white;
+            border-radius: 10px;
+            font-size: 15px;
+        }
+        .buttons {
+            display: none;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
+            border-radius: 5px;
+        }
+        .understood { background: #28a745; color: white; }
+        .not-understood { background: #dc3545; color: white; }
+    </style>
+</head>
+<body>
+
+    <h1>Life in Nazi Germany - Smart Flashcards</h1>
+
+    <div id="flashcard-container" class="flashcard" onclick="flipCard()">
+        <div class="front"></div>
+        <div class="back"></div>
+    </div>
+
+    <div class="buttons">
+        <button class="understood" onclick="markUnderstood()">Understand</button>
+        <button class="not-understood" onclick="markNotUnderstood()">Don't Understand</button>
+    </div>
+
+    <script>
+        const flashcards = [
+            { question: "What was the Nazi ideal role for women?", answer: "Women were expected to follow the 'Three Ks': Kinder (children), Küche (kitchen), Kirche (church). They were encouraged to be homemakers and mothers, not workers." },
+            { question: "What was the purpose of the Hitler Youth?", answer: "The Hitler Youth (HJ) trained boys for military service, taught Nazi ideology, and promoted discipline. The League of German Girls focused on preparing girls for motherhood." },
+            { question: "Who were the Edelweiss Pirates and Swing Youth?", answer: "The Edelweiss Pirates were working-class youth who opposed Nazi control and sometimes attacked Hitler Youth members. The Swing Youth rejected Nazi values, enjoyed jazz, and defied restrictions." },
+            { question: "How did the Nazis reduce unemployment?", answer: "Through public works programs (e.g., Autobahns), rearmament, conscription, and removing women & Jews from jobs to lower statistics." },
+            { question: "What was the German Labour Front (DAF)?", answer: "The DAF replaced trade unions (banned in 1933). It controlled workers' conditions but banned strikes and wage negotiations." },
+            { question: "What was Strength Through Joy (KdF)?", answer: "KdF provided leisure activities for workers, such as cheap holidays, concerts, and sports, to maintain loyalty to the Nazi state." },
+            { question: "What was the Volkswagen Scheme?", answer: "A savings scheme where workers could pay towards owning a Volkswagen Beetle, but no cars were ever delivered." },
+            { question: "What was Nazi racial policy?", answer: "Nazis promoted Aryan superiority, enforced sterilization of 'undesirable' groups, and persecuted Jews, Roma, disabled people, and others." },
+            { question: "What were the Nuremberg Laws (1935)?", answer: "They stripped Jews of citizenship, banned Jewish-German marriages, and defined Jewish identity based on ancestry." },
+            { question: "What was Kristallnacht (1938)?", answer: "A violent anti-Jewish attack where synagogues, businesses, and homes were destroyed, and thousands of Jews were arrested." },
+            { question: "How did the Nazis control religion?", answer: "They signed a Concordat with the Catholic Church (1933) but later restricted religious freedom, arrested priests, and promoted the Reich Church." },
+            { question: "What was the role of propaganda in Nazi Germany?", answer: "Goebbels controlled media, films, posters, and rallies to glorify Hitler and spread Nazi messages." },
+            { question: "How did education change under the Nazis?", answer: "Schools focused on racial ideology, military training, and Nazi history. Teachers had to be Nazi Party members." },
+            { question: "What was the Lebensborn program?", answer: "A program encouraging SS officers to have children with Aryan women to create a 'racially pure' generation." },
+            { question: "How did the Nazis treat disabled people?", answer: "Through forced sterilization and the T4 euthanasia program, which killed over 200,000 disabled people." },
+            { question: "How did Nazi policies affect women’s employment?", answer: "Women were encouraged to leave jobs, but as WWII approached, labor shortages forced Nazis to recruit women into factories." },
+            { question: "What was the purpose of Nazi youth indoctrination?", answer: "To create loyal Nazi followers who would obey Hitler, fight for Germany, and reject opposing beliefs." },
+            { question: "How did the Nazis control culture and art?", answer: "They banned 'degenerate' art and promoted nationalist, heroic imagery." },
+            { question: "What were concentration camps used for in the 1930s?", answer: "Originally for political prisoners (e.g., communists), later expanded to include Jews, Roma, and other 'undesirables'." },
+            { question: "How did Nazi rule affect everyday life?", answer: "While some Germans benefited from employment and propaganda, fear, surveillance, and persecution were widespread." }
+        ];
+
+        let currentIndex = 0;
+        let notUnderstood = [];
+
+        function loadFlashcard(index) {
+            document.querySelector(".front").innerHTML = flashcards[index].question;
+            document.querySelector(".back").innerHTML = flashcards[index].answer;
+        }
+        function flipCard() { document.querySelector(".flashcard").classList.toggle("flipped"); }
+        function markUnderstood() { currentIndex++; loadFlashcard(currentIndex); }
+        function markNotUnderstood() { notUnderstood.push(flashcards[currentIndex]); markUnderstood(); }
+
+        loadFlashcard(currentIndex);
+    </script>
+</body>
+</html>
